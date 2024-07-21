@@ -114,5 +114,47 @@ app.post('/edit-cobj', async (req, res) => {
   }
 })
 
+app.get('/delete-cobj', async (req, res) => {
+  const id = req.query.id
+  const deletePokemon = `https://api.hubspot.com/crm/v3/objects/2-131495119/${id}?portalId=145079411&properties=name,type,weakness`
+
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    'Content-Type': 'application/json',
+  }
+
+  try {
+    const resp = await axios.get(deletePokemon, { headers })
+    const data = resp.data
+    res.render('delete', {
+      title: 'Delete Custom Object Form | Integrating With HubSpot I Practicum',
+      id: id,
+      name: data.properties.name,
+      type: data.properties.type,
+      weakness: data.properties.weakness,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+app.post('/delete-cobj', async (req, res) => {
+  const id = req.body.id
+  const deletePokemon = `https://api.hubspot.com/crm/v3/objects/2-131495119/${id}?portalId=145079411&properties=name,type,weakness`
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    'Content-Type': 'application/json',
+  }
+
+  //   res.json(deletePokemon)
+
+  try {
+    await axios.delete(deletePokemon, { headers })
+    res.redirect('/')
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 // * Localhost
 app.listen(3000, () => console.log('Listening on http://localhost:3000'))
