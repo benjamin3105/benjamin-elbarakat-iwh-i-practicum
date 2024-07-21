@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        h1 Delete Custom Object Form | Integrating With HubSpot I Practicum  
+
+        a(href="/") Return to the homepage
+
+        .card                
+            h3= `Are you sure you want to delete ${name}?`
+            form(action="/delete-cobj" method="POST")
+                div
+                    input(type="hidden" name="id" value= `${id}`)
+                    input(type="submit" value="Yes Delete it")   
+                    a(href="/") Cancel          
