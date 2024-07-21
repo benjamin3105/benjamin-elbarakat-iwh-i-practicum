@@ -24,7 +24,7 @@ app.get('/', async (req, res) => {
     const resp = await axios.get(pokemons, { headers })
     const data = resp.data.results
     // res.json(data)
-    res.render('homepage', { title: 'Custom objects | HubSpot APIs', data })
+    res.render('homepage', { title: 'Pokemons Custom objects | HubSpot APIs', data })
   } catch (error) {
     console.error(error)
   }
