@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        h1 Edit Custom Object Form | Integrating With HubSpot I Practicum  
+
+        a(href="/") Return to the homepage
+
+        .card
+            h3= `Edit ${name}`
+            form(action="/edit-cobj" method="POST")
+                input(type="hidden" name="id" value= `${id}`)
+                div
+                    label(for="newName") Name:
+                    input(type="text"  name="newName" required value = `${name}`)
+                div
+                    label(for="newType") Type:
+                    input(type="text"  name="newType" required value = `${type}`)
+                div
+                    label(for="newWeakness") Weakness:
+                    input(type="text"  name="newWeakness" required value = `${weakness}`)
+                div
+                    input(type="submit" value="Submit")
+                    a(href="/") Cancel   
+
+            form(action="/delete-cobj" method="POST")
+                input(type="submit" value="Delete")           

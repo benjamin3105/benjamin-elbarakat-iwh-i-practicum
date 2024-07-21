@@ -41,6 +41,7 @@ app.get('/update-cobj', (req, res) => {
 // * Code for Route 3 goes here
 app.post('/update-cobj', async (req, res) => {
   const newPokemon = {
+    id: req.body.id,
     properties: {
       name: req.body.name,
       type: req.body.type,
@@ -58,6 +59,58 @@ app.post('/update-cobj', async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).send('Error creating new pokemon')
+  }
+})
+
+// Extra
+
+app.get('/edit-cobj', async (req, res) => {
+  // http://localhost:3000/edit-cobj?id=6496797157
+  const id = req.query.id
+  const editPokemon = `https://api.hubspot.com/crm/v3/objects/2-131495119/${id}?portalId=145079411&properties=name,type,weakness`
+
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    'Content-Type': 'application/json',
+  }
+
+  try {
+    const resp = await axios.get(editPokemon, { headers })
+    const data = resp.data
+    res.render('edit', {
+      title: 'Update Custom Object Form | Integrating With HubSpot I Practicum',
+      id: id,
+      name: data.properties.name,
+      type: data.properties.type,
+      weakness: data.properties.weakness,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+app.post('/edit-cobj', async (req, res) => {
+  const id = req.body.id
+  const editPokemon = {
+    id: id,
+    properties: {
+      name: req.body.newName,
+      type: req.body.newType,
+      weakness: req.body.newWeakness,
+    },
+  }
+
+  const pokemonsUrl = `https://api.hubspot.com/crm/v3/objects/2-131495119/${id}?portalId=145079411&properties=name,type,weakness`
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    'Content-Type': 'application/json',
+  }
+
+  try {
+    await axios.patch(pokemonsUrl, editPokemon, { headers })
+    res.redirect('/')
+  } catch (error) {
+    console.error(error)
   }
 })
 
