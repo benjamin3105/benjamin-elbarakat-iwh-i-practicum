@@ -6,10 +6,18 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body    
         h1 Pokemons Custom Objects
+
         a(href="/update-cobj")  Add/Update this table
+        
         table 
-            each pokemons in data
+            thead 
                 tr 
-                    td Name: #{pokemons.properties.name} 
-                    td Type: #{pokemons.properties.type}
-                    td Weakness #{pokemons.properties.weakness}
+                th Name
+                th Type
+                th Weakness
+            tbody
+                each pokemons in data
+                    tr 
+                        td #{pokemons.properties.name} 
+                        td #{pokemons.properties.type}
+                        td #{pokemons.properties.weakness}
